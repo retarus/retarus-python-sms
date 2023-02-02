@@ -1,0 +1,3 @@
+retarus-common
+pydantic
+aiohttp
