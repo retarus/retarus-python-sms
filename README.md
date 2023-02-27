@@ -24,35 +24,21 @@ First, you need to configure the SDK with your details.
 from retarus.commons.configuration import Configuration
 
 Configuration.set_auth(your_user_id, your_password)
-Configuration.set_region(your_region)
-# if its required for your service (eg. fax)
-Configuration.customer_number = "my_customer_number"
 ```
 Each service implements a client, so simply call "retarus.your_service" and create a client that provides your functionality.
 
 ```python
-from retarus.fax.client import FaxClient
+from retarus.sms.client import SmsClient
 
-sdk = FaxClient(True)
+sdk = SmsClient(True)
 ```
 Please note that *True* will use the SDK in an asynchronous way while *False* will work in synchronous setup.
 
-### Region
-The SDK also offers a simple way to select a region where your jobs should be processed. By default the SDK will use the Europe region.
-
-To configure your region:
-```python
-from retarus.commons.configuration import Configuration
-from retarus.commons.region import Region
-# if its required for your service (eg. fax)
-Configuration.set_region(Region.Europe)
-```
-
-### Send a Fax
+### Send a SMS
 To send a fax, first setup the SDK like described above. For your credentials, we recommend to setup an .env file. It should also contain the customer number. 
 > **Please note:** Using the API will only work with valid credentials.
 
-After that, you can execute the examples 'send_job_async.py' (for asynchronous processing) or 'send_job_sync.py' (for synchronous processing) with Python. As a result, you should get a message that reports back the ID of the created job.
+After that, you can execute the examples 'send_jobs_async.py' (for asynchronous processing) or 'send_job_sync.py' (for synchronous processing) with Python. As a result, you should get a message that reports back the ID of the created job.
 
 In the fax examples folder, you will also find examples on how to retrieve the status of a fax job ID. The examples contain a little documentation on their own.
 

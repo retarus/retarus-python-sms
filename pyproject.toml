@@ -10,7 +10,7 @@ authors = [
 description=  "The official client SDK for easy implementation of Retarus sms services."
 
 [project.urls]
-repository = "https://github.com/retarus/retarus-python"
+repository = "https://github.com/retarus/retarus-python-sms"
 
 
 [tool.setuptools.dynamic]
