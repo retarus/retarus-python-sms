@@ -2,6 +2,7 @@ import pytest
 import os
 
 from retarus.sms.client import SmsClient
+from retarus.sms.model import SmsJob
 from retarus.commons.config import Configuration
 from retarus.commons.exceptions import ConfigurationError
 
@@ -26,9 +27,6 @@ async def test_authentication_validation():
         assert False
 
 
-sync_sdk = SmsClient()
-
-
 @pytest.mark.asyncio
 async def test_server_version():
     init()
@@ -39,6 +37,14 @@ async def test_server_version():
 
 
 @pytest.mark.asyncio
+async def test_Send_sms():
+    init()
+    sms = SmsJob.minimal("+4917600000000", "Hallo Welt")
+    res = await sdk.client.send_sms(sms)
+    print(res)
+    assert False
+
+@pytest.mark.asyncio
 async def test_filter_sms_jobs():
     init()
 
@@ -47,6 +53,9 @@ async def test_filter_sms_jobs():
     if len(res) != 2:
         assert False
 
+
+
+sync_sdk = SmsClient()
 
 def test_sync_client():
     init()

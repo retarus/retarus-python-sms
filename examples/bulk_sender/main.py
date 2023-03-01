@@ -14,14 +14,20 @@ Configuration.set_auth(os.environ["retarus_userid"], os.environ["retarus_sms_pas
 async_sdk = SmsClient(True)
 
 
-async def send_fax_job(jobs: List[SmsJob]):
-    # gets the list of jobs and sends it via the sdk and receives a response with the job_id
-    reports = []
+async def send_sms_jobs(jobs: List[SmsJob]):    
+    res_futures = []
     for job in jobs:
-        res = await async_sdk.client.send_sms(job)
-        reports.append(res)
+        res = asyncio.ensure_future(async_sdk.client.send_sms(job))
+        res_futures.append(res)
+    return await asyncio.gather(*res_futures)
 
-    return reports
+
+async def get_sms_reports(ids: list[str]):
+    res_futures = []
+    for x in ids:
+        res = asyncio.ensure_future(async_sdk.client.get_sms_job(x["jobId"]))
+        res_futures.append(res)
+    return await asyncio.gather(*res_futures)
 
 
 def write_reports(reports: list):
@@ -33,8 +39,9 @@ def write_reports(reports: list):
 
 
 async def main():
+
     prepared_jobs: List[SmsJob] = []
-    df = pd.read_csv("assets/sms_data.csv")
+    df = pd.read_csv("assets/sms_data.csv", converters={'number': str})
     for data in df.values:
         recipient = Recipient(dst=data[2])
         firstname = data[1]
@@ -44,14 +51,17 @@ async def main():
         )
         job = SmsJob(messages=[message])
         prepared_jobs.append(job)
-
-    job_ids = await send_fax_job(prepared_jobs)
+    job_ids = asyncio.ensure_future(send_sms_jobs(prepared_jobs))
+    await job_ids
+    
     reports = []
-    for job_id in job_ids:
-        report = await async_sdk.client.get_sms_job(job_id["jobId"])
-        reports.append(report)
+    
+    # delay for the server to process the jobs and create the reports
+    await asyncio.sleep(2)
+    reports = asyncio.ensure_future(get_sms_reports(job_ids.result()))
+    await reports
 
-    write_reports(reports)
+    write_reports(reports.result())
 
 
 if __name__ == "__main__":

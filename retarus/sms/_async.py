@@ -10,7 +10,7 @@ class AsyncSmsClient(Client):
 
     async def send_sms(self, sms: SmsJob):
         data = sms.exclude_optional_dict()
-        url = "jobs"
+        url = "/jobs"
         res = await self.transporter.post(url, data)
         return res
 

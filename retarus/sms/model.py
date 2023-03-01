@@ -53,6 +53,9 @@ class SmsJob(BaseModel):
     def exclude_optional_dict(model: BaseModel):
         return {**model.dict(exclude_unset=True), **model.dict(exclude_none=True)}
 
+    def minimal(number: str, message: str) -> SmsJob:
+        return SmsJob(messages=[Messages(text=message, recipients=[Recipient(dst=number)])])
+
 
 class JobReport(BaseModel):
     job_id: str
@@ -76,7 +79,7 @@ class Client(object):
     def send_sms(self, sms: SmsJob):
         pass
 
-    def get_sms_jobs(self, job_id: str) -> dict:
+    def get_sms_job(self, job_id: str) -> dict:
         pass
 
     def filter_sms_jobs(self, *args, **kwargs):

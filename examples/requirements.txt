@@ -1,0 +1,2 @@
+retarus-python-sms
+python-dotenv

@@ -49,16 +49,21 @@ def initialize():
 
 async def send_sms_jobs(jobs: List[SmsJob]):
     async_sdk = SmsClient(True)
-
-    # gets the list of jobs and sends it via the sdk and receives a response with the job_id
+    
+    res_futures = []
     for job in jobs:
-        id = await async_sdk.client.send_sms(job)
-        print("Fax job was sent successfully, you can track it with job ID " + id['jobId'])
-
+        res = asyncio.ensure_future(async_sdk.client.send_sms(job))
+        res_futures.append(res)
+    return await asyncio.gather(*res_futures)
 
 
 if __name__ == "__main__":
     # With load_dotenv, you load the env file needed in the initialize function.
     load_dotenv()
     jobs = initialize()
-    asyncio.run(send_sms_jobs(jobs))
+    loop = asyncio.get_event_loop()
+    res = asyncio.ensure_future(send_sms_jobs(jobs))
+    loop.run_until_complete(res)
+    for x in res.result():
+        print(x)
+    print(res)

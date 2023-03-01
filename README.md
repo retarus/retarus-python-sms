@@ -35,10 +35,10 @@ sdk = SmsClient(True)
 Please note that *True* will use the SDK in an asynchronous way while *False* will work in synchronous setup.
 
 ### Send a SMS
-To send a fax, first setup the SDK like described above. For your credentials, we recommend to setup an .env file. It should also contain the customer number. 
+To send a sms, first setup the SDK like described above. For your credentials, we recommend to setup an .env file. It should also contain the customer number. 
 > **Please note:** Using the API will only work with valid credentials.
 
 After that, you can execute the examples 'send_jobs_async.py' (for asynchronous processing) or 'send_job_sync.py' (for synchronous processing) with Python. As a result, you should get a message that reports back the ID of the created job.
 
-In the fax examples folder, you will also find examples on how to retrieve the status of a fax job ID. The examples contain a little documentation on their own.
+In the sms examples folder, you will also find examples on how to retrieve the status of a sms job ID. The examples contain a little documentation on their own.
 

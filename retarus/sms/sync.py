@@ -12,7 +12,7 @@ class SyncSmsClient(Client):
         res = self.loop.run_until_complete(self.client.send_sms(sms))
         return res
 
-    def get_sms_jobs(self, job_id: str) -> dict:
+    def get_sms_job(self, job_id: str) -> dict:
         res = self.loop.run_until_complete(self.client.get_sms_job(job_id))
         return res
 
