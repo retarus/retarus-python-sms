@@ -10,8 +10,8 @@ jobs:
   testing:
     runs-on: ubuntu-22.04
     env:
-      retarus_userid: ${{ secrets.retarus_userid }}
-      retarus_sms_password: ${{ secrets.retarus_sms_password }}
+      retarus_userid: ${{ secrets.RETARUS_USERID }}
+      retarus_sms_password: ${{ secrets.RETARUS_SMS_PASSWORD }}
     strategy:
       matrix:
         python-version: ["3.8", "3.10"]
@@ -51,7 +51,31 @@ jobs:
          pip install build 
          python3 -m build --sdist --wheel --outdir dist/ .
 
-      - uses: actions/cache@v3
+      - uses: actions/upload-artifact@v2
         with:
           path: dist
-          key: gh_action_retarus_sdk_python
+          name: ci_python_sms
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    env:
+      pypi: ${{ secrets.PIPY_API_TOKEN}}
+      pypi_user: ${{ secrets.PIPY_API_USER}}
+    needs: building
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: install twine
+        run: pip install twine
+      - run: mkdir -p  ~/download-art
+      - uses: actions/download-artifact@v2
+        with:
+          key: ci_python_sms
+          name: ci_python_sms
+          path: ~/download-art
+      
+      - name: upload artifacts
+        run: |
+          python3 -m twine upload -u $pypi_user -p $pypi ~/download-art/* --non-interactive --verbose
