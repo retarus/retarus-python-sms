@@ -20,18 +20,18 @@ jobs:
       - name: install twine
         run: | 
           pip install twine wheel
-      - run: mkdir -p  ~/dist
+      - run: mkdir -p  /tmp/dist
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2.26.0
         with:
           github_token: ${{secrets.gh_token}}
           workflow: ci.yaml
           name: ${{ github.sha }}-ci_python_sms
-          path: ~/dist
+          path: /tmp/dist
 
       - name: upload artifacts
         run: |
-          python3 -m twine upload -u $pypi_user -p $pypi ~/dist/* --non-interactive --verbose
+          python3 -m twine upload -u $pypi_user -p $pypi /tmp/dist/* --non-interactive --verbose
         
       - name: Create gh release
         uses: softprops/action-gh-release@v1
