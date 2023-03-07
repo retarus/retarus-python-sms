@@ -19,18 +19,31 @@ jobs:
 
       - name: install twine
         run: pip install twine
-      - run: mkdir -p  /download-art
+      - run: mkdir -p  ~/download-art
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2.26.0
         with:
           github_token: ${{secrets.gh_token}}
           workflow: ci.yaml
           name: ${{ github.sha }}-ci_python_sms
-          path: /download-art
+          path: ~/download-art
+
+      - name: Fetch action
+        id: pl
+        uses: Rishabh510/Path-lister-action@master
+        with:
+          path: ~/download-art
+
+      - name: Output results
+        run: |
+          echo "Found ${{ steps.pl.outputs.path_count }} file(s) with this extension:"
+          for i in ${{ steps.pl.outputs.paths }}; do
+          echo $i
+          done
 
       - name: upload artifacts
         run: |
-          python3 -m twine upload -u $pypi_user -p $pypi /download-art/* --non-interactive --verbose
+          python3 -m twine upload -u $pypi_user -p $pypi ~/download-art/* --non-interactive --verbose
         
       - name: Create gh release
         uses: softprops/action-gh-release@v1
