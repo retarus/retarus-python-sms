@@ -26,12 +26,7 @@ jobs:
           github_token: ${{secrets.gh_token}}
           workflow: ci.yaml
           name: ${{ github.sha }}-ci_python_sms
-          path: ~/download-art
-      
-      - name: list dir
-        run: |
-          ls -a
-          ls -a ~/download-art/
+          path: ~/download-art/
 
       - name: upload artifacts
         run: |
