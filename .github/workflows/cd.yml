@@ -30,7 +30,7 @@ jobs:
           
       - name: upload artifacts
         run: |
-          python3 -m twine upload -u $pypi_user -p $pypi /home/root/download-art/*  --non-interactive --verbose
+          python3 -m twine upload -u $pypi_user -p $pypi ~/download-art/dist*  --non-interactive --verbose
           
       - name: Create gh release
         uses: softprops/action-gh-release@v1
