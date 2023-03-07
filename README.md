@@ -7,13 +7,13 @@ Install from PyPi using pip, a package manager for Python. Minimum python versio
 
 
 ```bash
-pip install retarus-python-sms
+pip install retarus-sms
 ```
 
 
 Or you can download the [source code for the Retarus python SDK](https://github.com/retarus/retarus-python-sms) and then build it with following command:
 ```bash
-git clone https://github.com/retarus/retarus-python
+git clone https://github.com/retarus/retarus-python-sms
 cd retarus-python
 pip install .
 ```
