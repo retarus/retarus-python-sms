@@ -14,7 +14,7 @@ repository = "https://github.com/retarus/retarus-python-sms"
 
 
 [tool.setuptools.dynamic]
-readme = {file = ["README.md"]}
+readme = {file = "README.md", content-type = "text/markdown"}
 dependencies = {file = "requirements.txt"}
 
 [build-system]
