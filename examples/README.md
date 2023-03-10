@@ -9,7 +9,7 @@ All the example applications still require credentials to authorize your request
 export retarus_userid="your_retarus_userid"
 ```
 
-Or you could use an ".env" file which contains your credentials and other information with the same variables names as they are called in the examples.
+Or you could use an ".env" file which contains your credentials and other information with the same variable names as they are called in the examples.
 If you are using the .env file you need to add following line to the example and install following package:
 
 
