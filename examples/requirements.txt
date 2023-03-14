@@ -1,2 +1,2 @@
 retarus-python-sms
-python-dotenv
+python-dotenv==1.0.0

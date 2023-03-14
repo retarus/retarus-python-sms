@@ -21,7 +21,6 @@ pip install python-dotenv
 ```python
 from dotenv import load_dotenv
 
-
 load_dotenv()
 ```
 
@@ -29,7 +28,6 @@ load_dotenv()
 To find out which variables are needed you can search for the following statements in the examples:
 ```python
 import os
-
 
 os.environ["retarus_userid"]
 ```

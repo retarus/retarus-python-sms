@@ -53,7 +53,5 @@ After that, you can execute the examples 'send_jobs_async.py' (for asynchronous 
 
 In the sms examples folder, you will also find examples on how to retrieve the status of a sms job. The examples contain a little documentation on their own.
 
-
-
-
-
+### Exepections
+This SDK uses [custom exceptions](https://github.com/retarus/retarus-python-common/blob/main/retarus/commons/exceptions.py) which should grant the developer better indication what the current problem is and how to fix it.

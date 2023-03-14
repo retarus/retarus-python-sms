@@ -25,6 +25,7 @@ def initialize():
     return jobs
 
 def main():
+    load_dotenv()
     jobs = initialize()
     sdk = SmsClient()
     for job in jobs:
